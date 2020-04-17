@@ -16,8 +16,19 @@ class Home extends Component {
                     it should send you to the details page with that ID (which will be a property of it)
                     I'll make a component each listing...
                 </p>
-                {JSON.stringify(this.props.reduxState)}
-                <Listing id='7' history={this.props.history}/>
+                <ul>
+                    {this.props.reduxState.movies.map((item) => 
+                        <Listing 
+                        key={item.id} 
+                        id={item.id} 
+                        title={item.title} 
+                        poster={item.poster}
+                        description={item.description}
+                        history={this.props.history}/>
+                    )}
+                </ul>
+
+
             </div>
         )
     }

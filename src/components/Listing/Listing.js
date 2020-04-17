@@ -42,10 +42,13 @@ class Listing extends Component {
                 I could make it a card...
             </p>
             <Card onClick={this.handleClick}>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {this.props.title}
+                </Typography>
                 <CardContent>
-                    <img src='./images/avatar.jpeg' />
-                    <Typography>
-                        Avatar
+                    <img src={this.props.poster} />
+                    <Typography component="p">
+                        {this.props.description}
                     </Typography>
                 </CardContent>
             </Card>
