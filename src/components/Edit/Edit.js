@@ -32,6 +32,8 @@ class Edit extends Component {
     componentDidMount() {
         this.props.dispatch({ type: 'GET_ALL_GENRES'});
     }
+
+    //it would be nice to get the state to have the title and description set on page load
     state = ({
         selectedGenre: '',
         title: '',
