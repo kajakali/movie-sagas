@@ -4,7 +4,7 @@ import './index.css';
 import App from './components/App/App.js';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, takeLatest, put } from 'redux-saga/effects';
 // Provider allows us to use redux within our react app
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
@@ -15,7 +15,8 @@ import createSagaMiddleware from 'redux-saga';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchMovies);
-
+    yield takeEvery('GET_DETAILS', getDetails);
+    yield takeEvery('GET_GENRES', getGenres);
 }
 
 function* fetchMovies() {
@@ -26,6 +27,29 @@ function* fetchMovies() {
     }
     catch (error) {
         console.log('error in getting the movies from the database with saga', error);
+    }
+}
+
+
+function* getDetails(action) {
+    try {
+        const  detailsResponse = yield axios.get(`/movies/details/${action.payload}`);
+        console.log('details response', detailsResponse);
+        yield put({ type: 'SET_DETAILS', payload: detailsResponse.data});
+    }
+    catch (error) {
+        console.log('error in movie detail saga')
+    }
+}
+
+function* getGenres(action) {
+    try {
+        const  genresResponse = yield axios.get(`/genres/${action.payload}`);
+        console.log('genres response', genresResponse);
+        yield put({ type: 'SET_GENRES', payload: genresResponse.data});
+    }
+    catch (error) {
+        console.log('error in movie genre saga');
     }
 }
 // Create sagaMiddleware
@@ -43,6 +67,14 @@ const movies = (state = [], action) => {
     }
 }
 
+const details = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_DETAILS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 // Used to store the movie genres
 const genres = (state = [], action) => {
     switch (action.type) {
@@ -58,6 +90,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        details,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

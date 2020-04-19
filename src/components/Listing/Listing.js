@@ -6,12 +6,13 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { CardMedia } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 
 const styles = {
     card: {
       minWidth: 275,
-      maxWidth: 400,
+      maxWidth: 500,
     },
     title: {
       fontSize: 14,
@@ -30,19 +31,13 @@ class Listing extends Component {
   
     handleClick = () => {
         console.log('you clicked on a movie!', this.props.id);
-        this.props.history.push(`/details/${this.props.id}`)
+        this.props.history.push(`/details/${this.props.id}`);
     }
 
     render() {
         console.log('listing props, ', this.props);
         const classes = this.props.classes;
       return (
-        <div >
-            <p>
-                here's where I'll put the movie poster and the text based on the this.props.id
-                it needs an onClick that goes to the details page
-                I could make it a card...
-            </p>
             <Card className={classes.card}
                 onClick={this.handleClick}>
 
@@ -57,7 +52,6 @@ class Listing extends Component {
                 </Typography>
                 </CardContent>
             </Card>
-        </div>
       );
     }
   }
@@ -65,5 +59,5 @@ class Listing extends Component {
       classes: PropTypes.object.isRequired,
   };
   
-  export default withStyles(styles)(Listing);
+  export default connect()(withStyles(styles)(Listing));
   

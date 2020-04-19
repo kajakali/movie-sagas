@@ -1,9 +1,22 @@
 import Button from '@material-ui/core/Button';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 
 
 class Details extends Component {
+
+    state = {
+        movie: {}
+    }
+
+    componentDidMount() {
+        console.log('component mounted');
+        this.props.dispatch({ type: 'GET_DETAILS', payload: this.props.match.params.id});
+        this.props.dispatch({ type: 'GET_GENRES', payload: this.props.match.params.id});
+        
+
+    }
 
     goHome = (event) => {
         console.log('you are headed home');
@@ -22,13 +35,22 @@ class Details extends Component {
                     <h2>Details</h2>
                     <p>The `match` prop is: {JSON.stringify(this.props.match)}</p>
                     <p>This is the details page for item with id {this.props.match.params.id}!</p>
-                  </div>
-                  <Button 
-                    variant="raised" 
+                    {this.props.reduxState.details.map( item => 
+                    (<>
+                    <img src={item.poster} alt={item.title} />
+                    <h2>{item.title}</h2>
+                    <p>{item.description}</p>
+                    </>))}
+                    <ul>
+                    {this.props.reduxState.genres.map( item => <li key={item.id}>{item.name}</li>)}
+                    </ul>
+                </div>
+                <Button 
+                    variant="contained" 
                     onClick={this.goHome}
                     color="primary">Home</Button>
                 <Button 
-                    variant="raised" 
+                    variant="contained" 
                     onClick={this.handleEdit}
                     color="secondary">Edit</Button>
             </div>
@@ -36,4 +58,8 @@ class Details extends Component {
     }
 }
 
-export default (Details);
+const putReduxStateOnProps = (reduxState) => ({
+    reduxState
+});
+
+export default connect(putReduxStateOnProps)(Details);

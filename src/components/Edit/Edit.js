@@ -23,11 +23,11 @@ class Edit extends Component {
                 <p>The `match` prop is: {JSON.stringify(this.props.match)}</p>
                 <p>This is the edit page for item with id {this.props.match.params.id}!</p>
                 <Button 
-                    variant="raised" 
+                    variant="contained" 
                     onClick={this.goHome}
                     color="primary">Home</Button>
                 <Button 
-                    variant="raised" 
+                    variant="contained" 
                     onClick={this.handleEdit}
                     color="secondary">Edit</Button>
             </div>
