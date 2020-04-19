@@ -33,7 +33,7 @@ class Edit extends Component {
         this.props.dispatch({ type: 'GET_ALL_GENRES'});
     }
     state = ({
-        selectedGenre: ''
+        selectedGenre: '',
     })
     goHome = (event) => {
         console.log('you are headed home');
@@ -42,10 +42,14 @@ class Edit extends Component {
     handleEdit = () => {
         console.log('handle the edit here');
         console.log(this.state.selectedGenre);
+            // get the matching number from the key of the menu...
+        
+        this.props.dispatch({ type: 'ADD_LISTING_GENRE', payload: {selectedGenre: this.state.selectedGenre, id: this.props.match.params.id}});
     }
 
     handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
+        console.log(event.target);
+        this.setState({ [name]: event.target.value,});
       };
     render() {
         console.log('details this props', this.props);
@@ -73,7 +77,7 @@ class Edit extends Component {
                     margin="normal"
                     >
                           {this.props.reduxState.allGenres.map(option => (
-                        <MenuItem key={option.id} value={option.name}>
+                        <MenuItem key={option.id} value={option.id}>
                         {option.name}
                         </MenuItem>
                         ))}

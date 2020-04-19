@@ -20,7 +20,16 @@ router.get('/:id', (req, res) => {
     });
 
 })
-
+router.put('/:id', (req, res) => {
+    console.log('put function info', req.params.id, req.body.data.selectedGenre);
+    const sqlText = 'INSERT INTO "movies_genres" ("movie_id", "genre_id") VALUES ($1, $2);';
+    pool.query(sqlText, [req.params.id, req.body.data.selectedGenre]).then( (result) => {
+        res.sendStatus(200);
+    }).catch( (error) => {
+        console.log('error adding genre to database', error);
+        res.sendStatus(500);
+    });
+})
 router.get('/', (req, res) => {
     const sqlText = `SELECT * FROM "genres";`;
     pool.query(sqlText).then( (result) => {

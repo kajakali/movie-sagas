@@ -18,6 +18,7 @@ function* rootSaga() {
     yield takeEvery('GET_DETAILS', getDetails);
     yield takeEvery('GET_GENRES', getGenres);
     yield takeEvery('GET_ALL_GENRES', getAllGenres);
+    yield takeEvery('ADD_LISTING_GENRE', addListingGenre);
 }
 
 function* fetchMovies() {
@@ -51,6 +52,17 @@ function* getGenres(action) {
     }
     catch (error) {
         console.log('error in movie genre saga');
+    }
+}
+
+function* addListingGenre(action) {
+    try {
+        const addGenreResponse = yield axios.put(`/genres/${action.payload.id}`, {data: action.payload});
+        console.log('add genres response', addGenreResponse);
+        this.props.dispatch({ type: 'FETCH_MOVIES'});
+    }
+    catch (error) {
+        console.log('error in add genre to listing saga', error)
     }
 }
 
