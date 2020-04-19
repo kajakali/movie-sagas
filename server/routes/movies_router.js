@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 
-
+// this is to get all the movies in the movies table
 router.get('/', (req, res) => {
     console.log('in get route');
     const sqlText = `SELECT * FROM "movies";`;
@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// this is to get all the information about one movie in the movies table
 router.get('/details/:id', (req, res) => {
     console.log('in get details', req.params.id);
     //query the database for the thing with that ID.
@@ -29,6 +30,7 @@ router.get('/details/:id', (req, res) => {
 
 })
 
+// this is to update the title and description of the movie from the edit page
 router.put('/', (req, res) => {
     console.log('movies put function info', req.body.data);
     const sqlText = `UPDATE "movies" SET "title" = $2, "description" = $3  WHERE "id" = $1;`;

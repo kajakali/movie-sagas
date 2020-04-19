@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Link} from 'react-router-dom';
-import { ThemeProvider, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import pink from '@material-ui/core/colors/pink';
 import './App.css';
@@ -30,7 +30,7 @@ class App extends Component {
             <header>
               <h1>movies router</h1>
             </header>
-            <nav>
+{/*             <nav>
               <ul>
                 <li>
                   <Link to='/'>Home</Link>
@@ -42,7 +42,7 @@ class App extends Component {
                   <Link to='/edit/47'>Edit</Link>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
             <Route exact path='/' component={Home} />
             <Route path='/details/:id' component={Details} />
             <Route path='/edit/:id' component={Edit} />

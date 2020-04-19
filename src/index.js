@@ -21,7 +21,8 @@ function* rootSaga() {
     yield takeEvery('ADD_LISTING_GENRE', addListingGenre);
     yield takeEvery('EDIT_LISTING', editListing);
 }
-
+// fetchMovies gets the movies from the database and then uses set movies to put them
+// in the movies reducer
 function* fetchMovies() {
     try {
         const moviesResponse = yield axios.get('/movies');
@@ -33,7 +34,8 @@ function* fetchMovies() {
     }
 }
 
-
+// getDetails gets details about a specific movie based on the id in the details page
+// and puts them in the details reducer so that the details page can use them
 function* getDetails(action) {
     try {
         const  detailsResponse = yield axios.get(`/movies/details/${action.payload}`);
@@ -45,6 +47,8 @@ function* getDetails(action) {
     }
 }
 
+// getGenres gets the genres that are associated with the movie through the junction table
+// and puts them on the genres reducer so that they can be displayed on the details page
 function* getGenres(action) {
     try {
         const  genresResponse = yield axios.get(`/genres/${action.payload}`);
@@ -56,6 +60,8 @@ function* getGenres(action) {
     }
 }
 
+//addListingGenre gets the new genre and the id of the listing that's going to have a genre added
+// and sends it to the database to make a new line on the junction table
 function* addListingGenre(action) {
     try {
         const addGenreResponse = yield axios.put(`/genres/${action.payload.id}`, {data: action.payload});
@@ -66,6 +72,9 @@ function* addListingGenre(action) {
         console.log('error in add genre to listing saga', error)
     }
 }
+
+//editListing gets the new title and description from the text areas on the edit page and
+//sends them to the database to update the movies table
 function* editListing(action) {
     try {
         const editListingResponse = yield axios.put(`/movies`, {data: action.payload});
@@ -76,7 +85,8 @@ function* editListing(action) {
         console.log('error in editing listing saga', error)
     }
 }
-
+// getGenres gets the genres that already are in use in the database and puts them in the
+// allGenres reducer so that the edit page knows what genres you should be allowed to use
 function* getAllGenres() {
     try {
         const allGenresResponse = yield axios.get(`genres`);
@@ -100,7 +110,8 @@ const movies = (state = [], action) => {
             return state;
     }
 }
-
+// stores the details of the current listing for use on details page (and could be used on edit
+//page eventually, too)
 const details = (state = [], action) => {
     switch (action.type) {
         case 'SET_DETAILS':
@@ -109,7 +120,7 @@ const details = (state = [], action) => {
             return state;
     }
 }
-// Used to store the movie genres
+// Used to store the movie genres associated with a particular listing
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
@@ -118,6 +129,9 @@ const genres = (state = [], action) => {
             return state;
     }
 }
+
+//used to store all the genres currently used in the whole database so that the
+// edit page knows which genres to allow as new genres
 const allGenres = (state = [], action) => {
     switch (action.type) {
         case 'SET_ALL_GENRES':

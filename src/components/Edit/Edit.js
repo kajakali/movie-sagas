@@ -39,15 +39,18 @@ class Edit extends Component {
     })
     goHome = (event) => {
         console.log('you are headed home');
-        this.props.history.push('/');
+                //move the user back to the details page for this listing
+                this.props.history.push(`/details/${this.props.match.params.id}`);
     }
     handleEditGenre = () => {
         console.log('handle the genre edit here');
+        // the selected genre is the number associated with the genre, not the name, 
+        //because the junction table doesn't have the names, just the numbers.
         console.log(this.state.selectedGenre);
-            // get the matching number from the key of the menu...
-        
+        //send the genre to add and the id that it'll be connected to to the saga
         this.props.dispatch({ type: 'ADD_LISTING_GENRE', payload: {selectedGenre: this.state.selectedGenre, id: this.props.match.params.id}});
-        this.props.history.push('/');
+                //move the user back to the details page for the same id, which will show the new genre
+        this.props.history.push(`/details/${this.props.match.params.id}`);
     }
 
     handleEditMovie =() => {
@@ -55,17 +58,16 @@ class Edit extends Component {
         //send the data to the server/database
         this.props.dispatch({ type: 'EDIT_LISTING', payload: {title: this.state.title, description: this.state.description, id: this.props.match.params.id}})
 
-        //move teh used back to the details page
-        this.props.history.push('/');
+        //move the user back to the details page
+        this.props.history.push(`/details/${this.props.match.params.id}`);
     }
 
     handleChange = name => event => {
         console.log(event.target);
         this.setState({ [name]: event.target.value,});
       };
+
     render() {
-        console.log('details this props', this.props);
-        const classes = this.props.classes;
         return(
             <div>
                 <h2>Edit</h2>
@@ -89,26 +91,23 @@ class Edit extends Component {
                 <Button 
                     variant="contained" 
                     onClick={this.handleEditMovie}
-                    color="secondary">Edit Movie
+                    color="secondary">Save Movie Info
                 </Button>
                 </>
-
+                <br />
                 <>
                 <TextField
                     id="select-genre"
-                     select
-                     label="Select"
-                    //  className={classes.textField}
-                     value={this.state.selectedGenre}
-                     onChange={this.handleChange('selectedGenre')}
-  /*                   SelectProps={{
-                        MenuProps: {
-                        className: classes.menu,
-                        },
-                    }} */
+                    select
+                    label="Select"
+                    value={this.state.selectedGenre}
+                    onChange={this.handleChange('selectedGenre')}
                     helperText="Please select the genre to add"
                     margin="normal"
                     >
+                        {/*this list is the list of the genres in the database
+                        I would probably like to take this and remove from it
+                        the ones that are already in use before using it here */}
                           {this.props.reduxState.allGenres.map(option => (
                         <MenuItem key={option.id} value={option.id}>
                         {option.name}
@@ -118,13 +117,13 @@ class Edit extends Component {
                 <Button 
                     variant="contained" 
                     onClick={this.handleEditGenre}
-                    color="secondary">Edit Genre
+                    color="secondary">Save New Genre
                 </Button>
                 </>
                 <Button 
                     variant="contained" 
                     onClick={this.goHome}
-                    color="primary">Back To List
+                    color="primary">Cancel
                 </Button>
 
             </div>

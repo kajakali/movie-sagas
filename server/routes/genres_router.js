@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 
-
+// this is to get the genres associated with a particular movie
 router.get('/:id', (req, res) => {
     console.log('in get genres', req.params.id);
     //query the database for the thing with that ID.
@@ -20,6 +20,8 @@ router.get('/:id', (req, res) => {
     });
 
 })
+
+//this is to add a new genre to the movie associated with the id
 router.put('/:id', (req, res) => {
     console.log('put function info', req.params.id, req.body.data.selectedGenre);
     const sqlText = 'INSERT INTO "movies_genres" ("movie_id", "genre_id") VALUES ($1, $2);';

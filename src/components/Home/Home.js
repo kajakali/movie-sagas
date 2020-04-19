@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
     componentDidMount(){
+        // get the movies from the database whenever you want to display the list of movies
         this.props.dispatch({ type: 'FETCH_MOVIES'});
     }
     render() {
@@ -22,8 +23,6 @@ class Home extends Component {
                         history={this.props.history}/>
                     )}
                 </ul>
-
-
             </div>
         )
     }

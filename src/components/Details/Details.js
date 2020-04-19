@@ -11,7 +11,8 @@ class Details extends Component {
     }
 
     componentDidMount() {
-        console.log('component mounted');
+        // whenever you create this page, it gets the associated details and genres 
+        //based on the id of the page that you got when you clicked on the listing
         this.props.dispatch({ type: 'GET_DETAILS', payload: this.props.match.params.id});
         this.props.dispatch({ type: 'GET_GENRES', payload: this.props.match.params.id});
         
@@ -19,19 +20,23 @@ class Details extends Component {
     }
 
     goHome = (event) => {
+        // the Back to List button takes you to '/'
         console.log('you are headed home');
         this.props.history.push('/');
     }
 
     handleEdit = (event) => {
+        // the edit button takes you to the edit page for the id of the listing
         console.log('you are going to edit');
         this.props.history.push(`/edit/${this.props.match.params.id}`)
     }
     render() {
-        console.log('details this props', this.props);
         return(
             <div>
                 <div>
+                    {/*There's only one item in the details reducer but
+                    it's inside an array, hence the map. The genres reducer could have
+                    any number of items inside */}
                     <h2>Details</h2>
                     {this.props.reduxState.details.map( item => 
                     (<>

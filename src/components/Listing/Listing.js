@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { CardMedia } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 
@@ -17,11 +15,6 @@ const styles = {
     title: {
       fontSize: 14,
     },
-    media: {
-        height: 0,
-        paddingTop: '56.25%',
-        marginTop:30
-      },
     pos: {
       marginBottom: 12,
     },
@@ -30,7 +23,8 @@ const styles = {
 class Listing extends Component {
   
     handleClick = () => {
-        console.log('you clicked on a movie!', this.props.id);
+        // when you click on a movie listing, 
+        //it sends you to the details page for the movie with that id
         this.props.history.push(`/details/${this.props.id}`);
     }
 
