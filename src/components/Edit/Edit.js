@@ -34,17 +34,29 @@ class Edit extends Component {
     }
     state = ({
         selectedGenre: '',
+        title: '',
+        description: '',
     })
     goHome = (event) => {
         console.log('you are headed home');
         this.props.history.push('/');
     }
-    handleEdit = () => {
-        console.log('handle the edit here');
+    handleEditGenre = () => {
+        console.log('handle the genre edit here');
         console.log(this.state.selectedGenre);
             // get the matching number from the key of the menu...
         
         this.props.dispatch({ type: 'ADD_LISTING_GENRE', payload: {selectedGenre: this.state.selectedGenre, id: this.props.match.params.id}});
+        this.props.history.push('/');
+    }
+
+    handleEditMovie =() => {
+        console.log('edit the movie', this.state);
+        //send the data to the server/database
+        this.props.dispatch({ type: 'EDIT_LISTING', payload: {title: this.state.title, description: this.state.description, id: this.props.match.params.id}})
+
+        //move teh used back to the details page
+        this.props.history.push('/');
     }
 
     handleChange = name => event => {
@@ -57,10 +69,31 @@ class Edit extends Component {
         return(
             <div>
                 <h2>Edit</h2>
-                <p>The `match` prop is: {JSON.stringify(this.props.match)}</p>
-                <p>This is the edit page for item with id {this.props.match.params.id}!</p>
-                <p>add a genre!!!</p>
-                <p>add a genre to this line item!!!</p>
+                <>
+                <TextField
+                    id="change-title"
+                    label="Title"
+                    value={this.state.title}
+                    onChange={this.handleChange('title')}
+                    margin="normal"
+                    />
+                <TextField
+                    id="change-description"
+                    label="Description"
+                    multiline
+                    rowsMax="4"
+                    value={this.state.description}
+                    onChange={this.handleChange('description')}
+                    margin="normal"
+                    />
+                <Button 
+                    variant="contained" 
+                    onClick={this.handleEditMovie}
+                    color="secondary">Edit Movie
+                </Button>
+                </>
+
+                <>
                 <TextField
                     id="select-genre"
                      select
@@ -84,14 +117,16 @@ class Edit extends Component {
                 </TextField>
                 <Button 
                     variant="contained" 
-                    onClick={this.goHome}
-                    color="primary">Home
+                    onClick={this.handleEditGenre}
+                    color="secondary">Edit Genre
                 </Button>
+                </>
                 <Button 
                     variant="contained" 
-                    onClick={this.handleEdit}
-                    color="secondary">Edit
+                    onClick={this.goHome}
+                    color="primary">Back To List
                 </Button>
+
             </div>
         )
     }

@@ -47,7 +47,6 @@ class App extends Component {
             <Route path='/details/:id' component={Details} />
             <Route path='/edit/:id' component={Edit} />
           </Router>
-           {/**make a router, home details, edit... make a saga make a reducer */}
         </MuiThemeProvider>
     )   
   };

@@ -33,8 +33,6 @@ class Details extends Component {
             <div>
                 <div>
                     <h2>Details</h2>
-                    <p>The `match` prop is: {JSON.stringify(this.props.match)}</p>
-                    <p>This is the details page for item with id {this.props.match.params.id}!</p>
                     {this.props.reduxState.details.map( item => 
                     (<>
                     <img src={item.poster} alt={item.title} />
@@ -48,7 +46,7 @@ class Details extends Component {
                 <Button 
                     variant="contained" 
                     onClick={this.goHome}
-                    color="primary">Home</Button>
+                    color="primary">Back to List</Button>
                 <Button 
                     variant="contained" 
                     onClick={this.handleEdit}

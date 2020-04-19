@@ -35,7 +35,6 @@ class Listing extends Component {
     }
 
     render() {
-        console.log('listing props, ', this.props);
         const classes = this.props.classes;
       return (
             <Card className={classes.card}
