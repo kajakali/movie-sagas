@@ -79,7 +79,7 @@ function* editListing(action) {
     try {
         const editListingResponse = yield axios.put(`/movies`, {data: action.payload});
         console.log('edit movies response', editListingResponse)
-        yield this.props.dispatch({ type: 'FETCH_MOVIES'});
+        yield this.props.dispatch({ type: 'GET_DETAILS'});
     }
     catch (error) {
         console.log('error in editing listing saga', error)
