@@ -23,7 +23,7 @@ const styles = {
 class Listing extends Component {
   
     handleClick = () => {
-        // when you click on a movie listing, 
+        // when you click on a movie listing, user
         //it sends you to the details page for the movie with that id
         this.props.history.push(`/details/${this.props.id}`);
     }
